@@ -1,0 +1,5 @@
+language: ruby
+rvm:
+  - 2.1.5
+before_install:
+  - sudo apt-get install libpqxx-4.0 libpqxx-dev
