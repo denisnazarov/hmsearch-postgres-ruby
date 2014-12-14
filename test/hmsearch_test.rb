@@ -1,5 +1,5 @@
-require 'hmsearch/postgres'
 require 'minitest/autorun'
+require 'hmsearch/postgres'
 require 'pg'
 
 class TestHmsearchPostgres < MiniTest::Unit::TestCase

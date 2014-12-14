@@ -1,6 +1,8 @@
 require 'mkmf'
 require 'rbconfig'
 
-$LDFLAGS += ' -lm -lpqxx'
+dir_config('pqxx')
+
+have_library('pqxx')
 
 create_makefile("hmsearch/postgres_ext")

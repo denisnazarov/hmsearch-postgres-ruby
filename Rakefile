@@ -21,6 +21,7 @@ end
 
 desc 'run tests'
 task test: :build do
+  $:.unshift('lib')
   FileList.new('./test/*_test.rb').each do |test|
     load test
   end
