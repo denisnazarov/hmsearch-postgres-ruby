@@ -5,7 +5,7 @@ dir_config('pqxx')
 
 have_library('pqxx')
 
-$CPPFLAGS += ' --std=c++11'
-$LDFLAGS += ' --std=c++11'
+$CPPFLAGS += ' --std=c++0x'
+$LDFLAGS += ' --std=c++0x'
 
 create_makefile("hmsearch/postgres_ext")
