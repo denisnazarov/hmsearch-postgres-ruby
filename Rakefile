@@ -39,7 +39,7 @@ end
 
 file $libpqxx_header => [$vendor_dir,  $libpqxx_dir] do
   chdir $libpqxx_dir do
-    sh "./configure --prefix=#{$vendor_dir}"
+    sh "./configure --enable-shared --prefix=#{$vendor_dir}"
     sh 'make'
     sh 'make install'
   end
