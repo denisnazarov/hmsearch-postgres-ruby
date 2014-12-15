@@ -15,26 +15,32 @@ class TestHmsearchPostgres < MiniTest::Unit::TestCase
     conn = HmSearch::Postgres.open('host=localhost port=5432 dbname=hmsearch_test');
 
     conn.insert('6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df0')
+    conn.insert('6e6fb315fa8c43fe9c2687d5be14575a4d7252104236747d571b97e003563df0')
 
-    # we can't do more than one op per open because of a bug in underlying library
-    # warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
-    # pqxx::prepare::invocation prep = n.prepared("select_multiple_"+i);
-    #
-    # instead of appending to the string this just moves the char pointer
-    # happens to work out ok one run through but not subsequent
+    expected = [{
+      hash: '6e6fb315fa8c43fe9c2687d5be14575a4d7252104236747d571b97e003563df0',
+      distance: 7
+    },{
+      hash: '6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df0',
+      distance: 1
+    }]
+
+    actual = conn.lookup('6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df2') 
+    
     conn.close
 
-    HmSearch::Postgres.open('host=localhost port=5432 dbname=hmsearch_test') do |conn|
+    conn = nil
 
-      actual = conn.lookup('6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df2', -1) 
-      
+
+    assert_equal(expected, actual)
+
+    HmSearch::Postgres.open('host=localhost port=5432 dbname=hmsearch_test') do |conn|
       expected = [{
         hash: '6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df0',
         distance: 1
       }]
-
+      actual = conn.lookup('6e6fb315fa8c43fe9c2687d5be14575abb7252104236747d571b97e003563df2', 1)
       assert_equal(expected, actual)
-
     end
   end
 end
