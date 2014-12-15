@@ -4,13 +4,13 @@ require 'pg'
 
 class TestHmsearchPostgres < MiniTest::Unit::TestCase
   def setup
-    conn = PG::Connection.open('host=localhost port=5432')
+    conn = PG::Connection.open('host=localhost port=5432 user=postgres')
     conn.exec('drop database hmsearch_test') rescue nil
     conn.exec('create database hmsearch_test')
   end
 
   def test_hmsearch
-    HmSearch::Postgres.initdb('host=localhost port=5432 dbname=hmsearch_test', 256, 10, 100000000)
+    HmSearch::Postgres.initdb('host=localhost port=5432 user=postgres dbname=hmsearch_test', 256, 10, 100000000)
 
     conn = HmSearch::Postgres.open('host=localhost port=5432 dbname=hmsearch_test');
 
