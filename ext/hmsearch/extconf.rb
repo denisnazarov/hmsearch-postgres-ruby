@@ -5,14 +5,7 @@ dir_config('pqxx')
 
 have_library('pqxx')
 
-with_cppflags('--std=c++11') do
-	try_cpp(<<-CPP)
-		#include <string>
-		int main() {
-			std::to_string(0);
-			return 0;
-		}
-	CPP
-end
+try_cppflags('--std=c++11')
+try_ldflags('--std=c++11')
 
 create_makefile("hmsearch/postgres_ext")
